@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>新开寺村</title>
+	<link rel="stylesheet" href="./css/swipers.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+	<script src="./js/rem.js"></script>
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/http.js"></script>
+    <script type="text/javascript">
+    	
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   			
+   		});
+    </script>
+</head>
+<body style="font-size: 16px;">
+	<div class="d_banner">
+		<!-- <img src="./img/icon_banner.png" alt=""> -->
+		<div class="swiper-container swiper-container-initialized swiper-container-horizontal">
+		  <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+
+		   <div class="swiper-slide swiper-slide-active" style="width: 770px;"><img src="./img/ada81b5108dff7e0a886856fa14ca308.png" alt=""></div></div>
+		  <!-- Add Pagination -->
+		  <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-bullets-dynamic" style="width: 80px;"><span class="swiper-pagination-bullet swiper-pagination-bullet-active swiper-pagination-bullet-active-main" style="left: 0px;"></span></div>
+		<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+	</div>
+	<div class="d_group_item">
+		<div class="d_item" onclick="window.location.href=&#39;./in_register.html&#39;">
+			<img src="./img/icon_in.png" alt="" class="d_item_img">
+			<text class="d_item_text">进入预登记</text>
+		</div>
+		<div class="d_item" onclick="window.location.href=&#39;./out_register.html&#39;">
+			<img src="./img/icon_out.png" alt="" class="d_item_img">
+			<text class="d_item_text">外出预登记</text>
+		</div>
+	</div>
+
+<script src="./js/swipers.min.js"> </script>
+<script>
+	
+	 function initBnner(){
+		 var swiper = new Swiper('.swiper-container', {
+		   pagination: {
+		     el: '.swiper-pagination',
+		     dynamicBullets: true,
+		   },
+		   autoplay: {
+		 	  delay: 1000,
+		 	  stopOnLastSlide: false,
+		 	  disableOnInteraction: true,
+		   },
+		  });
+	 }
+	 /*sendAjax(GetBanners,"",function(res){
+	 	if(res.code==0){
+	 		var datas = res.data.go_list
+	 		datas.forEach((item)=>{
+	 			var html = ' <div class="swiper-slide"><img src='+item.img+' alt=""></div>'
+	 			$(".swiper-wrapper").append(html)
+	 		})
+	 		initBnner()
+	 	}
+	 })*/
+	 initBnner();
+	 document.title = hisName; 
+</script>
+</body></html>

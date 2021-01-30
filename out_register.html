@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>外出预登记</title>
+    <link rel="stylesheet" href="./css/file.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/out_register.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="./js/rem.js"></script>
+    <script src="./js/layer.js"></script>
+    <script src="./js/http.js"></script>
+    <script src="./js/imgUp.js"></script>
+    <script type="text/javascript">
+
+        document.addEventListener('plusready', function(){
+            //console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+
+        });
+
+    </script>
+    <style>
+        select{
+            width:100%;
+            background:none;appearance:none;-moz-appearance:none;-webkit-appearance:none;
+            outline: none;
+            border:none;
+            font-size:0.3rem;
+            color:#666666;
+            padding:0.7rem 0 0.27rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<div class="isShow scroll">
+    <!--个人基本信息-->
+    <div class="d_person">
+        <div class="d_person_title">
+            <label></label>
+            <span>个人基本信息</span>
+        </div>
+        <div class="d_item">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>姓名</text>
+                </label>
+                <div class="d_camera">
+                    <img src="./img/icon_camera.png" alt="">
+                    <text>扫描身份证自动填写</text>
+                    <input accept="image/*"  id="filePic" type="file" class="files">
+                </div>
+            </div>
+            <div class="d_item_input">
+                <input  id="user_name" maxlength="5" type="text" placeholder="请输入您的姓名">
+            </div>
+        </div>
+        <div class="d_item">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>身份证号</text>
+                </label>
+            </div>
+            <div class="d_item_input">
+                <input id="user_idcard" maxlength="19" type="text" placeholder="请输入您的身份证号码">
+            </div>
+        </div>
+        <div class="d_item">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>身份证地址</text>
+                </label>
+            </div>
+            <div class="d_item_input">
+                <input id="user_address" type="text" placeholder="请输入您的身份证地址">
+            </div>
+        </div>
+        <div class="d_item" style="border-bottom: 0;">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>手机号码</text>
+                </label>
+            </div>
+            <div class="d_item_input">
+                <input id="user_phone" maxlength="11" type="text" placeholder="请输入您的手机号码">
+            </div>
+        </div>
+    </div>
+    <!--去向登记-->
+    <div class="d_person">
+        <div class="d_person_title">
+            <label></label>
+            <span>外出登记</span>
+        </div>
+        <div class="d_item">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>去往经历（去何处）</text>
+                </label>
+            </div>
+            <div class="d_item_input">
+                <input id="user_to_address" maxlength="19" type="text" placeholder="请输入文字说明，如：重庆市沙坪坝区图书馆">
+            </div>
+        </div>
+        <div class="d_item">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>交通方式（怎么去）</text>
+                </label>
+            </div>
+            <div class="d_item_input">
+                <select id="user_transport">
+                    <option value ="">请选择交通方式</option>
+                    <option value ="火车/动车/高铁">火车/动车/高铁</option>
+                    <option value ="自驾">自驾</option>
+                    <option value ="飞机">飞机</option>
+                    <option value ="客车">客车</option>
+                </select>
+                <!-- <input id="user_transport" type="text" placeholder="请输入文字说明，如自驾、轻轨、飞机、汽车等"> -->
+            </div>
+        </div>
+        <div class="d_item">
+            <div class="d_item_labels">
+                <label>
+                    <i>*</i>
+                    <text>来往事由（去做什么）</text>
+                </label>
+            </div>
+            <!-- <div class="d_item_input">
+                <input id="user_reason" type="text" placeholder="请输入文字说明，如打工、探亲等">
+            </div> -->
+            <div class="d_item">
+                <div class="d_item_selected" onclick="checkWork(this)" style="padding-top:0">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>工作</text>
+                </div>
+                <div class="d_item_selected" onclick="checkWork(this)">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>上学</text>
+                </div>
+                <div class="d_item_selected" onclick="checkWork(this)">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>探亲</text>
+                </div>
+                <div class="d_item_selected" onclick="checkWork(this)">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>回家</text>
+                </div>
+                <div class="d_item_selected" onclick="checkWork(this)">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>出差</text>
+                </div>
+                <div class="d_item_selected" onclick="checkWork(this)">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>施工</text>
+                </div>
+                <div class="d_item_selected" onclick="checkWork(this)">
+                    <img src="./img/icon_check.png" alt="" class="selected_img">
+                    <text>其他</text>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--上传证明资料-->
+    <div style="background:#ffffff;">
+        <div class="d_person" style="min-height:">
+            <div class="d_person_title">
+                <label></label>
+                <span>上传证明资料（必填 <em class="picLength">0</em>/9）</span>
+            </div>
+            <div class="d_item d_line" style="margin-top:0">
+                <!-- <div class="d_pic_item">
+                    <img src="./img/icon_add_photo.png" alt="" class="ic_add_pic">
+                    <input type="file" class="d_item_file">
+                </div>
+                <div class="d_pic_item">
+                    <img src="./img/icon_add_photo.png" alt="" class="ic_add_pic">
+                    <img src="./img/icon_close.png" alt="" class="ic_close">
+                </div> -->
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <!-- <p class="up-p">作品图片：<span class="up-span">最多可以上传5张图片，马上上传</span></p> -->
+                        <div class="z_photo upimg-div clear" >
+                            <!--<section class="up-section fl">
+                                 <span class="up-span"></span>
+                                 <img src="/img/buyerCenter/a7.png" class="close-upimg">
+                                 <img src="/img/buyerCenter/3c.png" class="type-upimg" alt="添加标签">
+                                 <img src="/img/test2.jpg" class="up-img">
+                                 <p class="img-namep"></p>
+                                 <input id="taglocation" name="taglocation" value="" type="hidden">
+                                 <input id="tags" name="tags" value="" type="hidden">
+                             </section>-->
+                            <section class="z_file fl">
+                                <img src="img/icon_add_photo.png" class="add-img">
+                                <input type="file" name="file" id="file" class="file" value="" accept="image/*" multiple  />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!--提交-->
+        <div class="btn_submit" >
+            <button onclick="btn_submit()">提交</button>
+        </div>
+    </div>
+</div>
+
+<!--外出登记成功-->
+<div class="show_success" style="display: none;">
+    <img src="./img/icon_success.png" alt="">
+    <div style="font-size:0.36rem;color:#333333;">提交成功</div>
+</div>
+</body>
+<script>
+    var sex=""
+    $('input').on('blur', function () {
+        setTimeout(function(){
+            var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+            window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+        }, 100);
+    });
+
+    //扫描识别
+    window.onload = function() {
+        // 获取input:file标签
+        let file = document.getElementById("filePic");
+        // 注册改变事件
+        file.onchange = () => {
+            // 获取里面上传的内容 -> 返回的是一个伪数组
+            let fileData = file.files[0];
+            // window.URL 有兼容问题
+            // 兼容代码
+            const windowURL = window.URL || window.webkitURL;
+            // window.URL.createObjectURL 会根据传入的参数创建一个指向该参数对象的URL
+            let imgSrc = windowURL.createObjectURL(fileData);
+            // 设置imgsrc
+            // document.querySelector("#img").setAttribute("src", imgSrc)
+            uploadFile(fileData)
+        };
+    };
+
+
+    //上传图片
+    function uploadFile(file){
+        var loading=layer.open({
+            type: 2,
+            content: '识别中...',
+            shadeClose: false,
+        });
+        var data = new FormData();
+        // data.append("path", opt.formData.path);
+        data.append("file", file);
+        $.ajax({
+            type : 'POST',
+            url : host+sacan_file_fun,
+            data : data,
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            success : function(res) {
+                var result=JSON.parse(res);//正式
+                // var result=res//测试
+                // console.log(res);
+                layer.close(loading)
+                $("#user_name").val(result.data.realname);//姓名
+                $("#user_idcard").val(result.data.id_card);//身份证号码
+                $("#user_address").val(result.data.id_card_address);//身份证地址
+                sex=result.data.sex;
+            },
+            error : function(e) {
+                layer.close(loading)
+            }
+        });
+    }
+    var user_reason="";//来往事由
+    function checkWork(obj,num){
+        $(".d_item_selected").find(".selected_img").attr("src","./img/icon_check.png")
+        $(obj).find(".selected_img").attr("src","./img/icon_cheked.png")
+        user_reason= $($(obj).children()[1]).html();
+    };
+
+    //提交
+    function btn_submit(){
+        //姓名
+        var user_name=$("#user_name").val();
+        if(user_name==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        //身份证号码
+        var user_idcard=$("#user_idcard").val();
+        if(user_idcard==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        var reg=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(user_idcard)==false){
+            layer.open({
+                content: '请输入有效合法的身份证号！',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return false;
+        }
+        //身份证地址
+        var user_address=$("#user_address").val();
+        if(user_address==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        //手机号
+        var user_phone=$("#user_phone").val();
+        if(user_phone==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        if(!(/^1[3456789]\d{9}$/.test(user_phone))){
+            layer.open({
+                content: '手机号码有误',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return false;
+        }
+        //现居住地
+        var user_nowAddress=$("#user_nowAddress").val();
+        if(user_nowAddress==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        //去往经历
+        var user_to_address=$("#user_to_address").val();
+        if(user_to_address==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        //交通方式
+        var user_transport=$("#user_transport").val();
+        if(user_transport==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+        //来往事由
+        // var user_reason=$("#user_reason").val();
+        if(user_reason==""){
+            layer.open({
+                content: '信息未填写完整',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        };
+
+        //循环拿到图片Id
+        var certId="";
+        $('.z_photo .up-section').each(function(i){                   // 遍历 tr
+            certId+=$(this).attr("data-id")+','
+        });
+        certId=certId.substring(0,certId.length-1)
+
+        if(certId==""){
+            layer.open({
+                content: '请上传证明资料，至少一张',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+            });
+            return;
+        }
+
+
+        var loading=layer.open({
+            type: 2,
+            content: '提交中...',
+            shadeClose: false,
+        });
+
+        //提交数据
+        var data={
+            realname:user_name,//姓名
+            id_card:user_idcard,//身份证
+            id_card_address:user_address,//身份证地址
+            mobile:user_phone,//手机号码
+            to_address:user_to_address,//去往经历
+            transport:user_transport,//交通方式
+            past_events:user_reason,//来往事由
+            cert:certId,//证明材料，图片id,英文逗号分割，例：3,4,5
+            sex:sex
+        }
+        sendAjax(out_submit_fun,data,function(res){
+            if(res.code==0){
+                $(".show_success").show();
+                $(".isShow").hide();
+                setTimeout(function(){
+                    layer.close(loading)
+                },1000)
+            }else{
+                layer.open({
+                    content: res.msg,
+                    skin: 'msg',
+                    time: 2 //2秒后自动关闭
+                });
+                setTimeout(function(){
+                    layer.close(loading)
+                },1000)
+            }
+        })
+
+    }
+</script>
+</html>
