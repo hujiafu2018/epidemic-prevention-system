@@ -419,22 +419,22 @@
 
         //提交数据
         var data={
-            realname:user_name,//姓名
-            id_card:user_idcard,//身份证
-            id_card_address:user_address,//身份证地址
-            mobile:user_phone,//手机号码
-            to_address:user_to_address,//去往经历
-            transport:user_transport,//交通方式
-            past_events:user_reason,//来往事由
-            cert:certId,//证明材料，图片id,英文逗号分割，例：3,4,5
+            name:user_name,//姓名
+            idCard:user_idcard,//身份证
+            cardAddress:user_address,//身份证地址
+            phoneNumber:user_phone,//手机号码
+            startAction:user_to_address,//去往经历
+            modelOfTransportation:user_transport,//交通方式
+            comeCause:user_reason,//来往事由
+            healthCertificateFile:certId,//证明材料，图片id,英文逗号分割，例：3,4,5
             sex:sex
         }
-        sendAjax(out_submit_fun,data,function(res){
-            if(res.code==0){
-                $(".show_success").show();
-                $(".isShow").hide();
+        sendAjax(out_submit_fun, JSON.stringify(data), 'post', function(res){
+            if(res.code == 200){
                 setTimeout(function(){
                     layer.close(loading)
+                    $(".show_success").show();
+                    $(".isShow").hide();
                 },1000)
             }else{
                 layer.open({

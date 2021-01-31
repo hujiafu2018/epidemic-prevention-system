@@ -134,7 +134,7 @@ $(function(){
 				// var result=JSON.parse(res);//正式
 				var result=res//测试
 				layer.close(loading)
-				$section.attr("data-id",result.data.id)
+				$section.attr("data-id",result.url)
 			},
 			error : function(e) {
 				layer.close(loading)

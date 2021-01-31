@@ -13,6 +13,7 @@
     <script src="./js/layer.js"></script>
     <script src="./js/http.js"></script>
     <script src="./js/imgUp.js"></script>
+    <script src="./js/testData.js"></script>
     <script type="text/javascript">
 
         document.addEventListener('plusready', function(){
@@ -337,6 +338,7 @@
 
     //打开弹窗
     var get_address_id="";//获取到的社区Id
+    var get_address_name="";//获取到的社区name
     var htmls=""//定义html
     var modelayer="";//关闭弹框
     function clickMenu(){
@@ -353,7 +355,7 @@
         $("#user_nowAddress").val($(obj).text());
         $(obj).addClass('setColor').siblings().removeClass("setColor")
         layer.close(modelayer)
-        get_address_id=id;
+        get_address_name = $(obj).text();
     }
 
     function selectAddress(arr){
@@ -402,10 +404,11 @@
         };
 
         //获取所属社
-        sendAjax(host + business_community_fun,"",function(res){
-            if(res.code==0){
-                for(var i in res.data){
-                    htmls+='<div class="label_icons" onclick="getAddressId(this,'+res.data[i].id+')">'+res.data[i].name+'</div>'
+        sendAjax(business_community_fun,"","get",function(res){
+            if(res.code == 200){
+                var data = res.rows;
+                for(var i = 0; i < data.length; i++){
+                    htmls+='<div class="label_icons" onclick="getAddressId(this,'+data[i].id+')">'+data[i].name+'</div>'
                 }
             }
         })
@@ -534,7 +537,7 @@
             return false;
         }
         //现居住地址
-        var user_nowAddress=get_address_id;
+        var user_nowAddress=get_address_name;
         if(user_nowAddress==""){
             layer.open({
                 content: '信息未填写完整',
@@ -615,27 +618,27 @@
         });
         //请求数据
         var data={
-            realname:user_name,//真实姓名
-            id_card:user_idcard,//身份证号码
-            id_card_address:user_address,//身份证地址
-            mobile:user_phone,//手机号码
-            now_address:user_nowAddress,//现居住地址
-            come_time:user_time,//来往时间
-            from_address:user_startAddress,//起点
-            transport:user_transportation,//交通方式
-            past_events:user_reason,//来往事由
-            body_condition:selected_num,//身体状况
-            landlord:user_landlady,//房东姓名
-            landlord_mobile:user_landlady_phone,//房东电话
-            icon:certId,//证明材料，图片id,英文逗号分割，例：3,4,5
+            name:user_name,//真实姓名
+            idCard:user_idcard,//身份证号码
+            cardAddress:user_address,//身份证地址
+            phoneNumber:user_phone,//手机号码
+            livingAdress:user_nowAddress,//现居住地址
+            comeTime:user_time,//来往时间
+            startAction:user_startAddress,//起点
+            modelOfTransportation:user_transportation,//交通方式
+            comeCause:user_reason,//来往事由
+            physicalCondition:selected_num,//身体状况
+            tenantsInformationCompany:user_landlady,//房东姓名
+            tenantsInformationPhone:user_landlady_phone,//房东电话
+            healthCertificateFile:certId,//证明材料，图片id,英文逗号分割，例：3,4,5
             sex:sex
         }
-        sendAjax(in_submit_fun,data,function(res){
-            if(res.code==0){
-                $(".show_success").show();
-                $(".isShow").hide();
+        sendAjax(in_submit_fun,JSON.stringify(data),'post',function(res){
+            if(res.code == 200){
                 setTimeout(function(){
                     layer.close(loading)
+                    $(".isShow").hide();
+                    $(".show_success").show();
                 },1000)
             }else{
                 layer.open({

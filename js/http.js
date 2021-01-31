@@ -1,7 +1,7 @@
 //测试的接口地址
 var hisName = "城口县"
 
-var host="http://gbdatatest.mx5918.com/index";
+var host="http://charsle.com:8082";
 var baseUrl="http://gbdatatest.mx5918.com/"
 var baseUrlMode="http://gbdatatest.mx5918.com"
 
@@ -11,11 +11,11 @@ var baseUrlMode="http://gbdatatest.mx5918.com"
 // var baseUrlMode="http://sihecun.mx5918.com"
 
 /*方法名称*/
-var in_submit_fun="/index/entry";//进入登记
-var out_submit_fun="/index/out";//出去登记
-var file_fun="/index/upload";//上传图片
+var in_submit_fun="/system/visit/registration/add";//进入登记
+var out_submit_fun="/system/out/registration/add";//出去登记
+var file_fun="/system/file/common/upload";//上传图片
 var sacan_file_fun="/index/card";//识别身份证
-var business_community_fun="/business/community";//社区
+var business_community_fun="/system/community/list";//社区
 var GetBanners="/index/getBanner";//获取banner
 var shop_index_fun="/shop/index";//商铺登记
 var business_index_fun="/business/index";//企业登记
@@ -43,22 +43,22 @@ var AddSeals="/seal/addSeal";//添加盖章
  * @param {Object} callback
  */
 
-function sendAjax(api,data,callback) {
+function sendAjax(api,data,type = 'POST', callback) {
     /*接口地址*/
     $.ajax({
         url: host+api,
-        type: "POST",
+        type: type,
         dataType: "json",
         data:data,
-        // contentType:"application/x-www-form-urlencoded",
+        contentType:"application/json",
         // enctype:"multipart/form-data",
         success: function(res) {
-            callback(JSON.parse(res))//正式
+            callback(res)//正式
             // callback(res)//测试
         },
 		error:function(err){
 			if(api==NewContract||api==EditContract||api==AddSeals){
-				vant.Toast("请求超时")
+
 			}
 		}
     })
