@@ -273,13 +273,21 @@
             contentType : false,
             dataType : 'json',
             success : function(res) {
-                var result=JSON.parse(res);//正式
-                // var result=res//测试
-                // console.log(res);
-                layer.close(loading)
-                $("#user_name").val(result.data.realname);//姓名
-                $("#user_idcard").val(result.data.id_card);//身份证号码
-                $("#user_address").val(result.data.id_card_address);//身份证地址
+                // var result=JSON.parse(res);//正式
+                var result = res; //测试
+                if (result.code != 200 || !result.data) {
+                    layer.open({
+                        content: '请上传正确的身份证',
+                        skin: 'msg',
+                        time: 2 //2秒后自动关闭
+                    });
+                    layer.close(loading);
+                    return;
+                }
+                layer.close(loading);
+                $("#user_name").val(result.data.name);//姓名
+                $("#user_idcard").val(result.data.num);//身份证号码
+                $("#user_address").val(result.data.address);//身份证地址
                 sex=result.data.sex;
             },
             error : function(e) {
