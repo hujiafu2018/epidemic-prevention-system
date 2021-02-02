@@ -1,7 +1,7 @@
 //测试的接口地址
 var hisName = "城口县"
 
-var host="http://charsle.com:8082";
+var host="http://47.108.239.145:8084";
 var baseUrl="http://gbdatatest.mx5918.com/"
 var baseUrlMode="http://gbdatatest.mx5918.com"
 
