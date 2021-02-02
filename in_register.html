@@ -128,8 +128,8 @@
                 </label>
             </div>
             <div class="d_item_input">
-                <!-- <input id="user_nowAddress" style="border-bottom: 0;" type="text" placeholder="请输入您的现居住地址"> -->
-                <input onclick="clickMenu()" type="text" id="user_nowAddress" readonly="readonly" placeholder="请选择您的现居住地址">
+                <input id="user_nowAddress" style="border-bottom: 0;" type="text" placeholder="请输入您的现居住地址">
+                <!-- <input onclick="clickMenu()" type="text" id="user_nowAddress" readonly="readonly" placeholder="请选择您的现居住地址"> -->
             </div>
         </div>
     </div>
@@ -403,14 +403,14 @@
         };
 
         //获取所属社
-        sendAjax(business_community_fun,"","get",function(res){
+        /* sendAjax(business_community_fun,"","get",function(res){
             if(res.code == 200){
                 var data = res.rows;
                 for(var i = 0; i < data.length; i++){
                     htmls+='<div class="label_icons" onclick="getAddressId(this,'+data[i].id+')">'+data[i].name+'</div>'
                 }
             }
-        })
+        }) */
     };
 
 
@@ -545,7 +545,7 @@
             return false;
         }
         //现居住地址
-        var user_nowAddress=get_address_name;
+        var user_nowAddress=$("#user_nowAddress").val();
         if(user_nowAddress==""){
             layer.open({
                 content: '信息未填写完整',
